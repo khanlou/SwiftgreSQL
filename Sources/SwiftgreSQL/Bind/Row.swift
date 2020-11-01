@@ -8,9 +8,9 @@
 import Foundation
 
 public struct Row {
-    let fields: [String: PostgresDataType]
+    public let fields: [String: PostgresDataType]
 
-    subscript(key: String) -> PostgresDataType? {
+    public subscript(key: String) -> PostgresDataType? {
         fields[key]
     }
 }
