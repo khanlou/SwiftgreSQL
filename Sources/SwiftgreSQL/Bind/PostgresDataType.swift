@@ -60,56 +60,56 @@ extension Data: PostgresDataTypeConvertible {
 
 extension PostgresDataType {
 
-    var string: String? {
+    public var string: String? {
         if case let .string(value) = self {
             return value
         }
         return nil
     }
 
-    var int: Int? {
+    public var int: Int? {
         if case let .int(value) = self {
             return value
         }
         return nil
     }
 
-    var double: Double? {
+    public var double: Double? {
         if case let .double(value) = self {
             return value
         }
         return nil
     }
 
-    var isNull: Bool {
+    public var isNull: Bool {
         if case .null = self {
             return true
         }
         return false
 
     }
-    var bytes: Data? {
+    public var bytes: Data? {
         if case let .bytes(value) = self {
             return value
         }
         return nil
     }
 
-    var bool: Bool? {
+    public var bool: Bool? {
         if case let .bool(value) = self {
             return value
         }
         return nil
     }
 
-    var array: [PostgresDataType]? {
+    public var array: [PostgresDataType]? {
         if case let .array(value) = self {
             return value
         }
         return nil
     }
 
-    var date: Date? {
+    public var date: Date? {
         if case let .date(value) = self {
             return value
         }
@@ -137,6 +137,7 @@ extension PostgresDataType {
             return Bind(date: value, configuration: configuration)
         }
     }
+    
     var postgresArrayElementString: String {
         switch self {
         case .null:
