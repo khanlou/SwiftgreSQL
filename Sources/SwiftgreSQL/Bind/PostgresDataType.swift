@@ -58,6 +58,16 @@ extension Data: PostgresDataTypeConvertible {
     }
 }
 
+extension Optional: PostgresDataTypeConvertible where Wrapped: PostgresDataTypeConvertible {
+    public func convertToPostgresType() -> PostgresDataType {
+        if let value = self {
+            return value.convertToPostgresType()
+        } else {
+            return .null
+        }
+    }
+}
+
 extension PostgresDataType {
 
     public var string: String? {
