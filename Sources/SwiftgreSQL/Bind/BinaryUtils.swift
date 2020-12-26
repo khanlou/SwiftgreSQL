@@ -328,7 +328,7 @@ struct BinaryUtils {
         static let referenceDate = Date(timeIntervalSinceReferenceDate: offsetTimeIntervalSinceFoundationReferenceDate)
     }
     
-    static func parseTimetamp(value: UnsafeMutablePointer<Int8>, isInteger: Bool) -> Date {
+    static func parseTimestamp(value: UnsafeMutablePointer<Int8>, isInteger: Bool) -> Date {
         let interval: TimeInterval
         if isInteger {
             let microseconds = parseInt64(value: (value))

@@ -224,7 +224,7 @@ class BinaryUtilsTests: XCTestCase {
 
         for (hexString, timestamp) in integerTimestampTests {
             var bytes = hexString.hexStringBytes
-            let parsedDate = BinaryUtils.parseTimetamp(value: &bytes, isInteger: true)
+            let parsedDate = BinaryUtils.parseTimestamp(value: &bytes, isInteger: true)
             
             XCTAssertEqual(timestamp.timeIntervalSince1970, parsedDate.timeIntervalSince1970, accuracy: 0.001)
         }
@@ -240,7 +240,7 @@ class BinaryUtilsTests: XCTestCase {
 
         for (hexString, timestamp) in floatTimestampTests {
             var bytes = hexString.hexStringBytes
-            let parsedDate = BinaryUtils.parseTimetamp(value: &bytes, isInteger: false)
+            let parsedDate = BinaryUtils.parseTimestamp(value: &bytes, isInteger: false)
             XCTAssertEqual(timestamp.timeIntervalSince1970, parsedDate.timeIntervalSince1970, accuracy: 0.001)
         }
     }

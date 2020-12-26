@@ -92,7 +92,7 @@ extension Bind {
             return .string(uuid)
             
         case .timestamp, .timestamptz, .date, .time, .timetz:
-            let date = BinaryUtils.parseTimetamp(value: value, isInteger: configuration.hasIntegerDatetimes)
+            let date = BinaryUtils.parseTimestamp(value: value, isInteger: configuration.hasIntegerDatetimes)
             return .date(date)
             
         case .interval:
