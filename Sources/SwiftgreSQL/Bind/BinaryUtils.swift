@@ -339,6 +339,15 @@ struct BinaryUtils {
         }
         return Date(timeInterval: interval, since: TimestampConstants.referenceDate)
     }
+
+    static func parseDate(value: UnsafeMutablePointer<Int8>, isInteger: Bool) -> Date {
+        let days = Int(parseInt32(value: value)) + 1
+        return Calendar(identifier: .gregorian)
+            .date(
+                byAdding: DateComponents(day: days),
+                to: TimestampConstants.referenceDate
+            )!
+    }
     
     // MARK: - Interval
     

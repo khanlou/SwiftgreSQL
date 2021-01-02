@@ -171,7 +171,7 @@ class PostgreSQLTests: XCTestCase {
         XCTAssertEqual(resultBytesNode?.bytes?.map({ $0 }) ?? [], data)
     }
     
-    func testDates() throws {
+    func testTimestamps() throws {
         let conn = try postgreSQL.makeConnection()
 
         let rows: [Date] = [
@@ -196,6 +196,34 @@ class PostgreSQLTests: XCTestCase {
             let node = resultRow["date"]
             XCTAssertNotNil(node?.date)
             XCTAssertEqual(node!.date!, rows[i])
+        }
+    }
+
+    func testDates() throws {
+        let conn = try postgreSQL.makeConnection()
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .short
+        dateFormatter.timeStyle = .none
+
+        let rows: [Date] = [
+            dateFormatter.date(from: "03/31/20")!,
+            dateFormatter.date(from: "12/01/01")!,
+            dateFormatter.date(from: "06/15/12")!,
+        ]
+
+        try conn.execute("DROP TABLE IF EXISTS foo")
+        try conn.execute("CREATE TABLE foo (id serial, date date)")
+        for row in rows {
+            try conn.execute("INSERT INTO foo VALUES (DEFAULT, $1)", [row])
+        }
+
+        let result = try conn.execute("SELECT * FROM foo ORDER BY id ASC")
+        XCTAssertEqual(result.count, rows.count)
+        for (i, resultRow) in result.enumerated() {
+            let node = resultRow["date"]
+            XCTAssertNotNil(node?.date)
+            XCTAssert(Calendar.current.isDate(node!.date!, equalTo: rows[i], toGranularity: .day), "\(node!.date!) is not the same day as \(rows[i])")
         }
     }
 
