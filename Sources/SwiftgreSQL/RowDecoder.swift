@@ -163,15 +163,16 @@ public class RowDecoder {
                 return UInt64(int)
             }
 
-            func decode(_ type: Date.Type, forKey key: Key) throws -> Date {
-                guard let date = try value(for: key).date else {
-                    throw DecodingError.dataCorruptedError(forKey: key, in: self, debugDescription: "Expected an date for key \(key)")
-                }
-                return date
-            }
-
             func decode<T>(_ type: T.Type, forKey key: Key) throws -> T where T : Decodable {
-                return try T(from: _RowDecoder(row: row, codingPath: self.codingPath + [key]))
+                if type == Date.self {
+                    if let date = try value(for: key).date {
+                        return date as! T
+                    } else {
+                        throw DecodingError.dataCorruptedError(forKey: key, in: self, debugDescription: "Expected an date for key \(key)")
+                    }
+                } else {
+                    return try T(from: _RowDecoder(row: row, codingPath: self.codingPath + [key]))
+                }
             }
 
             func nestedContainer<NestedKey>(keyedBy type: NestedKey.Type, forKey key: Key) throws -> KeyedDecodingContainer<NestedKey> where NestedKey : CodingKey {
