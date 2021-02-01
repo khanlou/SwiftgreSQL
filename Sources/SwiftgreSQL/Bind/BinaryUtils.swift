@@ -341,7 +341,7 @@ struct BinaryUtils {
     }
 
     static func parseDate(value: UnsafeMutablePointer<Int8>, isInteger: Bool) -> Date {
-        let days = Int(parseInt32(value: value)) + 1
+        let days = Int(parseInt32(value: value))
         return Calendar(identifier: .gregorian)
             .date(
                 byAdding: DateComponents(day: days),

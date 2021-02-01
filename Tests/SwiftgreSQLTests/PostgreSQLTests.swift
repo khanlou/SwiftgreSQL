@@ -203,13 +203,12 @@ class PostgreSQLTests: XCTestCase {
         let conn = try postgreSQL.makeConnection()
 
         let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .short
-        dateFormatter.timeStyle = .none
+        dateFormatter.dateFormat = "MM/dd/yyyy"
 
-        let rows: [Date] = [
-            dateFormatter.date(from: "03/31/20")!,
-            dateFormatter.date(from: "12/01/01")!,
-            dateFormatter.date(from: "06/15/12")!,
+        let rows: [String] = [
+            "03/31/2020",
+            "12/01/2001",
+            "06/15/2012",
         ]
 
         try conn.execute("DROP TABLE IF EXISTS foo")
@@ -223,7 +222,8 @@ class PostgreSQLTests: XCTestCase {
         for (i, resultRow) in result.enumerated() {
             let node = resultRow["date"]
             XCTAssertNotNil(node?.date)
-            XCTAssert(Calendar.current.isDate(node!.date!, equalTo: rows[i], toGranularity: .day), "\(node!.date!) is not the same day as \(rows[i])")
+            let formatted = dateFormatter.string(from: node!.date!)
+            XCTAssertEqual(formatted, rows[i], "\(formatted) is not the same day as \(rows[i])")
         }
     }
 
