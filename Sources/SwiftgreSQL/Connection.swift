@@ -202,7 +202,7 @@ public final class Connection: ConnInfoInitializable {
                     try self.validateConnection()
 
                     // Sleep to avoid looping continuously on cpu
-                    sleep(1)
+                    Thread.sleep(forTimeInterval: 1)
                     
                     PQconsumeInput(self.cConnection)
 

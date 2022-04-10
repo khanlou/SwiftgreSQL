@@ -802,7 +802,7 @@ class PostgreSQLTests: XCTestCase {
             stop = true
         }
 
-        sleep(1)
+        Thread.sleep(forTimeInterval: 1)
 
         try conn2.notify(channel: "test_channel1", payload: nil)
 
@@ -824,7 +824,7 @@ class PostgreSQLTests: XCTestCase {
             stop = true
         }
 
-        sleep(1)
+        Thread.sleep(forTimeInterval: 1)
 
         try conn2.notify(channel: "test_channel2", payload: "test_payload")
 
