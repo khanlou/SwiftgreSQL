@@ -1,5 +1,6 @@
 import CPostgreSQL
 import Dispatch
+import Foundation
 
 // This structure represents a handle to one database connection.
 // It is used for almost all PostgreSQL functions.
